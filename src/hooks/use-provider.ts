@@ -21,4 +21,8 @@
 // SOFTWARE.
 
 
-export { ThemeProvider } from './provider';
+export const useProvider = () => {
+
+
+  return {}
+}

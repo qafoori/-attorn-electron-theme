@@ -21,4 +21,20 @@
 // SOFTWARE.
 
 
-export { ThemeProvider } from './provider';
+export namespace AttornElectronTheme {
+
+  export type ThemeType = {
+    [name: string]: string;
+  }
+
+  /**
+   *  @specifies how to create a theme
+   *  @used in helpers => create-theme
+   */
+  export interface Theme {
+    [name: string]: string;
+  }
+
+  export type CSSSupportedColors = string[];
+
+}

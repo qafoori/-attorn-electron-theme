@@ -21,4 +21,16 @@
 // SOFTWARE.
 
 
-export { ThemeProvider } from './provider';
+import React, { FC } from 'react';
+import { AttornElectronTheme } from '../interfaces';
+import { useProvider } from '../hooks';
+
+export const ThemeProvider: FC<AttornElectronTheme.ThemeType> = (): JSX.Element => {
+  const { } = useProvider();
+
+  return (
+    <>
+      sadsd
+    </>
+  )
+}

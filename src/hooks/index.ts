@@ -21,4 +21,4 @@
 // SOFTWARE.
 
 
-export { ThemeProvider } from './provider';
+export { useProvider } from './use-provider';
