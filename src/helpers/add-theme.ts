@@ -20,7 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-export default {
-  esm: 'rollup',
-  cjs: 'rollup',
-};
+
+import { AttornElectronTheme } from '../interfaces';
+import { Storage } from '@attorn/electron-storage';
+import { DEFAULT_FOLDER_NAME } from '../constants';
+
+/**
+ * use this helper function to install new theme and store in storage
+ * @param param0 includes theme of theme and an object which describes the theme
+ */
+export const addTheme = ({ name, theme }: AttornElectronTheme.AddTheme) => {
+  new Storage({
+    name: `${DEFAULT_FOLDER_NAME}/${name}`,
+    defaults: { ...theme },
+    instantCreate: true
+  });
+}

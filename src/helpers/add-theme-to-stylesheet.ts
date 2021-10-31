@@ -21,12 +21,11 @@
 // SOFTWARE.
 
 
-import { defineConfig } from 'dumi';
-
-export default defineConfig({
-  title: '@attorn-electron-theme',
-  favicon: 'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
-  logo: 'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
-  outputPath: 'docs-dist',
-  // more config: https://d.umijs.org/config
-});
+/**
+ * use this helper function in your renderer to add "css root" into your stylesheet
+ * @param root "css :root" string
+ */
+export const addThemeToStylesheet = (root: string) => {
+  const sheet = document.styleSheets[0];
+  sheet.insertRule(root);
+}

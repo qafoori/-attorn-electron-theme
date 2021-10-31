@@ -21,41 +21,26 @@
 // SOFTWARE.
 
 
-export namespace AttornElectronTheme {
+// @ts-nocheck
+import { FC } from 'react';
+import { ipcRenderer } from 'electron';
+import { AttornElectronTheme } from '@attorn/electron-theme';
 
-  export type ThemeType = {
-    [name: string]: string;
-  }
+export const ThemeWorker: FC = (): JSX.Element => {
+  // suppose you got this object from a server
+  const mockThemes: AttornElectronTheme.Themes[] = [
+    { name: 'theme-0', theme: { background: 'red', color: 'black' } },
+    { name: 'theme-1', theme: { background: 'black', color: 'red' } },
+  ]
 
-  /**
-   *  @specifies how to create a theme
-   *  @used in helpers => create-theme
-   */
-  export interface Theme {
-    [name: string]: string;
-  }
+  const install = (theme: AttornElectronTheme.Themes) => ipcRenderer.send('install-theme', theme);
+  const uninstall = (theme: AttornElectronTheme.Themes) => ipcRenderer.send('uninstall-theme', theme);
 
-  export type CSSSupportedColors = string[];
+  return (<>
+    <button onClick={() => install(mockThemes[0])}>install theme-0</button>
+    <button onClick={() => install(mockThemes[1])}>install theme-1</button>
 
-  export interface Themes<T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme> {
-    name: string,
-    theme: T,
-    active?: boolean
-  }
-
-  export interface AddTheme extends Omit<Themes, 'active'> { }
-
-  export type Storage = {
-    themesStorage?: string;
-    preferenceStorage?: string;
-  }
-
-  export type ActiveTheme = {
-    activeTheme: string;
-  }
-
-  export type ChangeThemeResult = {
-    result: boolean;
-    root: string;
-  }
+    <button onClick={() => uninstall(mockThemes[0])}>uninstall theme-0</button>
+    <button onClick={() => uninstall(mockThemes[1])}>uninstall theme-1</button>
+  </>)
 }

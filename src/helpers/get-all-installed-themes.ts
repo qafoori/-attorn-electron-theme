@@ -21,4 +21,25 @@
 // SOFTWARE.
 
 
-export { useProvider } from './use-provider';
+import { Storage } from '@attorn/electron-storage';
+import { DEFAULT_FOLDER_NAME } from '../constants';
+import { AttornElectronTheme } from '../interfaces';
+
+/**
+ * not usable in common usages. it will get all installed themes from user storage
+ * @returns array of installed themes
+ */
+export const getAllInstalledThemes = () => {
+  const themeStore = new Storage({ name: DEFAULT_FOLDER_NAME });
+  const items = themeStore.list();
+  const themes: AttornElectronTheme.Themes[] = [];
+
+  items.forEach(item => {
+    const name = DEFAULT_FOLDER_NAME.concat('/', item.replace('.json', ''));
+    const itemStore = new Storage({ name })
+    const theme = <AttornElectronTheme.Theme>itemStore.read();
+    themes.push({ name: name.replace((DEFAULT_FOLDER_NAME).concat('/'), ''), theme })
+  })
+
+  return themes;
+}

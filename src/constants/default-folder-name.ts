@@ -21,41 +21,5 @@
 // SOFTWARE.
 
 
-export namespace AttornElectronTheme {
-
-  export type ThemeType = {
-    [name: string]: string;
-  }
-
-  /**
-   *  @specifies how to create a theme
-   *  @used in helpers => create-theme
-   */
-  export interface Theme {
-    [name: string]: string;
-  }
-
-  export type CSSSupportedColors = string[];
-
-  export interface Themes<T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme> {
-    name: string,
-    theme: T,
-    active?: boolean
-  }
-
-  export interface AddTheme extends Omit<Themes, 'active'> { }
-
-  export type Storage = {
-    themesStorage?: string;
-    preferenceStorage?: string;
-  }
-
-  export type ActiveTheme = {
-    activeTheme: string;
-  }
-
-  export type ChangeThemeResult = {
-    result: boolean;
-    root: string;
-  }
-}
+export const DEFAULT_FOLDER_NAME = 'attorn-themes/themes';
+export const SETTING_PATH = 'attorn-themes/settings';

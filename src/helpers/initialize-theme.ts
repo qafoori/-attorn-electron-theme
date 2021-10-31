@@ -21,56 +21,30 @@
 // SOFTWARE.
 
 
+import { getAllInstalledThemes, getActiveTheme, createDefaultThemes, createRootItems } from '.';
 import { AttornElectronTheme } from '../interfaces';
-import { CSSSupportedColors } from '../constants';
-
 
 /**
- *
- * @param theme the theme object
- * @returns css root
+ * Use this helper function to initialize default themes and then get
+ * all installed themes and as the last step add the installed theme into your stylesheet
+ * @param defaultThemes An array of all defaults themes you defined constantly in you app.
+ * @returns {
+ *  allThemes: all installed themes (including default themes and installed themes),
+ *  activeTheme: the preferred theme or the last theme
+ *  root: the "css :root" that you can add into your stylesheet
+ * }
  */
-export const createRootItems = (theme: AttornElectronTheme.Theme) => {
-  /**
-   * Get keys and values from user theme object
-   */
-  const objNames = Object.keys(theme);
-  const objValues = Object.values(theme);
+export const initializeTheme = <T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme>(
+  defaultThemes: AttornElectronTheme.Themes<T>[]
+) => {
+  createDefaultThemes(defaultThemes);
+  const allThemes = getAllInstalledThemes();
+  const activeTheme = getActiveTheme(allThemes);
+  const root = createRootItems(activeTheme.theme);
 
-
-  /**
-   * css root string
-   */
-  let root = '';
-
-
-  /**
-   * make the root items and add theme to root string
-   */
-  objNames.forEach((item, index) => {
-    // get the associated value
-    const associatedValue = objValues[index].toLowerCase();
-
-    // check if there was not a pound sign as the first letter, add it
-    const initializedValue =
-      CSSSupportedColors.includes(associatedValue) || associatedValue.substr(0, 1) === '#'
-        ? associatedValue
-        : '#'.concat(associatedValue);
-
-    // make the root item
-    root += `\n--${item}: ${initializedValue};`
-  })
-
-
-  root = `:root { ${root} }`;
-
-  /**
-   * then return the root items i made
-   * should be something like below
-   * :root {
-   *  --accentColor: #2d2d2d;
-   *  --buttonsBack: white;
-   * }
-   */
-  return root;
+  return {
+    allThemes,
+    activeTheme,
+    root
+  }
 }

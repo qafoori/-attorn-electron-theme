@@ -21,4 +21,12 @@
 // SOFTWARE.
 
 
-export { ThemeProvider } from './provider';
+export {
+  initializeTheme,
+  addThemeToStylesheet,
+  addTheme as installTheme,
+  removeTheme as uninstallTheme,
+  changeTheme
+} from './helpers';
+
+export { AttornElectronTheme } from './interfaces';

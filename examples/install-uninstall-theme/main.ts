@@ -21,16 +21,14 @@
 // SOFTWARE.
 
 
-import React, { FC } from 'react';
-import { AttornElectronTheme } from '../interfaces';
-import { useProvider } from '../hooks';
+// @ts-nocheck
+import { ipcMain } from 'electron';
+import { installTheme, uninstallTheme, AttornElectronTheme } from '@attorn/electron-theme';
 
-export const ThemeProvider: FC<AttornElectronTheme.ThemeType> = (): JSX.Element => {
-  const { } = useProvider();
+ipcMain.on('install-theme', (_, { name, theme }: AttornElectronTheme.Themes) => {
+  installTheme({ name, theme });
+});
 
-  return (
-    <>
-      sadsd
-    </>
-  )
-}
+ipcMain.on('uninstall-theme', (_, theme: AttornElectronTheme.Themes) => {
+  uninstallTheme(theme.name);
+});

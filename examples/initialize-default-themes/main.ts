@@ -21,41 +21,13 @@
 // SOFTWARE.
 
 
-export namespace AttornElectronTheme {
+// @ts-nocheck
+import { ipcMain } from 'electron';
+import { initializeTheme } from '@attorn/electron-theme';
+import { themes } from './constants';
 
-  export type ThemeType = {
-    [name: string]: string;
-  }
-
-  /**
-   *  @specifies how to create a theme
-   *  @used in helpers => create-theme
-   */
-  export interface Theme {
-    [name: string]: string;
-  }
-
-  export type CSSSupportedColors = string[];
-
-  export interface Themes<T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme> {
-    name: string,
-    theme: T,
-    active?: boolean
-  }
-
-  export interface AddTheme extends Omit<Themes, 'active'> { }
-
-  export type Storage = {
-    themesStorage?: string;
-    preferenceStorage?: string;
-  }
-
-  export type ActiveTheme = {
-    activeTheme: string;
-  }
-
-  export type ChangeThemeResult = {
-    result: boolean;
-    root: string;
-  }
-}
+ipcMain.on('before-ready-to-show', ({ sender }) => {
+  const { allThemes, activeTheme, root } = initializeTheme(themes);
+  // in here we have two extra results (allThemes and activeTheme). we do not use theme in these examples but you can use theme if you want.
+  sender.send('get-css-root', root);
+})

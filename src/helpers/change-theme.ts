@@ -21,8 +21,36 @@
 // SOFTWARE.
 
 
-export const useProvider = () => {
+import { Storage } from '@attorn/electron-storage';
+import { AttornElectronTheme } from '../interfaces';
+import { SETTING_PATH, DEFAULT_FOLDER_NAME } from '../constants';
+import { createRootItems } from './create-root-items';
 
+/**
+ *
+ * @param name the name of chosen theme
+ * @returns {
+ *  result: [boolean] if false, means there is no install theme called "name",
+ *  root: the "css :root{}" string, then add it into your stylesheet
+ * }
+ */
+export const changeTheme = (name: string): AttornElectronTheme.ChangeThemeResult => {
+  const settingStorage = new Storage({ name: SETTING_PATH });
+  const themesStorage = new Storage({ name: DEFAULT_FOLDER_NAME });
+  const allInstalled = themesStorage.list();
+  const exist = allInstalled.includes(name.concat('.json'));
 
-  return {}
+  if (!exist) {
+    return { result: false, root: '' };
+  }
+
+  settingStorage.update('activeTheme', name);
+  const themeStorage = new Storage({ name: `${DEFAULT_FOLDER_NAME}/${name}` });
+  const theme = <AttornElectronTheme.Theme>themeStorage.read();
+
+  return {
+    result: true,
+    root: createRootItems(theme)
+  }
 }
+

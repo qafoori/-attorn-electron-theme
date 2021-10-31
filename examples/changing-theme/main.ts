@@ -21,41 +21,14 @@
 // SOFTWARE.
 
 
-export namespace AttornElectronTheme {
+// @ts-nocheck
+import { ipcMain } from 'electron';
+import { changeTheme } from '@attorn/electron-theme';
 
-  export type ThemeType = {
-    [name: string]: string;
-  }
-
-  /**
-   *  @specifies how to create a theme
-   *  @used in helpers => create-theme
-   */
-  export interface Theme {
-    [name: string]: string;
-  }
-
-  export type CSSSupportedColors = string[];
-
-  export interface Themes<T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme> {
-    name: string,
-    theme: T,
-    active?: boolean
-  }
-
-  export interface AddTheme extends Omit<Themes, 'active'> { }
-
-  export type Storage = {
-    themesStorage?: string;
-    preferenceStorage?: string;
-  }
-
-  export type ActiveTheme = {
-    activeTheme: string;
-  }
-
-  export type ChangeThemeResult = {
-    result: boolean;
-    root: string;
-  }
-}
+ipcMain.on('change-theme', ({ sender }, themeName: string) => {
+  const outcomes = changeTheme(themeName)
+  // the outcome is something like this:
+  // { result: true, root: string }
+  // if outcomes.result is "false", that means there is no installed themes here called "themeName"
+  sender.send('change-theme-result', outcomes);
+})

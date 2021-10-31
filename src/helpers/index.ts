@@ -22,3 +22,11 @@
 
 
 export { createRootItems } from './create-root-items';
+export { createDefaultThemes } from './create-themes';
+export { addThemeToStylesheet } from './add-theme-to-stylesheet';
+export { addTheme } from './add-theme';
+export { getAllInstalledThemes } from './get-all-installed-themes';
+export { getActiveTheme } from './get-active-theme';
+export { initializeTheme } from './initialize-theme';
+export { removeTheme } from './remove-theme';
+export { changeTheme } from './change-theme';

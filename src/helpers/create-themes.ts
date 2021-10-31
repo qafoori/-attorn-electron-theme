@@ -21,56 +21,13 @@
 // SOFTWARE.
 
 
+import { addTheme } from '.';
 import { AttornElectronTheme } from '../interfaces';
-import { CSSSupportedColors } from '../constants';
-
 
 /**
- *
- * @param theme the theme object
- * @returns css root
+ * not usable in common usages. used to define themes in a loop
+ * @param themes array of themes to install
  */
-export const createRootItems = (theme: AttornElectronTheme.Theme) => {
-  /**
-   * Get keys and values from user theme object
-   */
-  const objNames = Object.keys(theme);
-  const objValues = Object.values(theme);
-
-
-  /**
-   * css root string
-   */
-  let root = '';
-
-
-  /**
-   * make the root items and add theme to root string
-   */
-  objNames.forEach((item, index) => {
-    // get the associated value
-    const associatedValue = objValues[index].toLowerCase();
-
-    // check if there was not a pound sign as the first letter, add it
-    const initializedValue =
-      CSSSupportedColors.includes(associatedValue) || associatedValue.substr(0, 1) === '#'
-        ? associatedValue
-        : '#'.concat(associatedValue);
-
-    // make the root item
-    root += `\n--${item}: ${initializedValue};`
-  })
-
-
-  root = `:root { ${root} }`;
-
-  /**
-   * then return the root items i made
-   * should be something like below
-   * :root {
-   *  --accentColor: #2d2d2d;
-   *  --buttonsBack: white;
-   * }
-   */
-  return root;
+export const createDefaultThemes = (themes: AttornElectronTheme.Themes[]) => {
+  themes.forEach(({ name, theme }) => addTheme({ name, theme }))
 }

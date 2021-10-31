@@ -21,41 +21,20 @@
 // SOFTWARE.
 
 
-export namespace AttornElectronTheme {
+// @ts-nocheck
+import { FC, useEffect, useState } from 'react';
+import { ipcRenderer } from 'electron';
+import { addThemeToStylesheet } from '@attorn/electron-theme';
 
-  export type ThemeType = {
-    [name: string]: string;
-  }
+export const AppEntryPoint: FC = (): JSX.Element => {
+  const [didMount, setDidMount] = useState<boolean>(false);
 
-  /**
-   *  @specifies how to create a theme
-   *  @used in helpers => create-theme
-   */
-  export interface Theme {
-    [name: string]: string;
-  }
+  ipcRenderer.on('get-css-root', (_, root) => {
+    setDidMount(true);
+    addThemeToStylesheet(root);
+  });
 
-  export type CSSSupportedColors = string[];
+  useEffect(() => ipcRenderer.send('before-ready-to-show'), []);
 
-  export interface Themes<T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme> {
-    name: string,
-    theme: T,
-    active?: boolean
-  }
-
-  export interface AddTheme extends Omit<Themes, 'active'> { }
-
-  export type Storage = {
-    themesStorage?: string;
-    preferenceStorage?: string;
-  }
-
-  export type ActiveTheme = {
-    activeTheme: string;
-  }
-
-  export type ChangeThemeResult = {
-    result: boolean;
-    root: string;
-  }
+  return didMount ? <p>My App</p> : <>loading...</>;
 }

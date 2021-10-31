@@ -21,41 +21,16 @@
 // SOFTWARE.
 
 
-export namespace AttornElectronTheme {
+// @ts-nocheck
+import { AttornElectronTheme } from '@attorn/electron-theme';
 
-  export type ThemeType = {
-    [name: string]: string;
-  }
-
-  /**
-   *  @specifies how to create a theme
-   *  @used in helpers => create-theme
-   */
-  export interface Theme {
-    [name: string]: string;
-  }
-
-  export type CSSSupportedColors = string[];
-
-  export interface Themes<T extends AttornElectronTheme.Theme = AttornElectronTheme.Theme> {
-    name: string,
-    theme: T,
-    active?: boolean
-  }
-
-  export interface AddTheme extends Omit<Themes, 'active'> { }
-
-  export type Storage = {
-    themesStorage?: string;
-    preferenceStorage?: string;
-  }
-
-  export type ActiveTheme = {
-    activeTheme: string;
-  }
-
-  export type ChangeThemeResult = {
-    result: boolean;
-    root: string;
-  }
+const defaultDark: AttornElectronTheme.Themes = {
+  name: 'default-dark',
+  theme: { background: 'black', color: 'white' }
 }
+const defaultLight: AttornElectronTheme.Themes = {
+  name: 'default-light',
+  theme: { background: 'light', color: 'black' }
+}
+
+export const themes = [defaultDark, defaultLight]

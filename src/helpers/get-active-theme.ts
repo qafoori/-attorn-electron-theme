@@ -20,5 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-declare module '*.css';
-declare module '*.less';
+
+import { SETTING_PATH } from '../constants';
+import { Storage } from '@attorn/electron-storage';
+import { AttornElectronTheme } from '../interfaces';
+
+/**
+ * not usable in common usages. it will detect the active theme (saved in user setting storage)
+ * @param allThemes all the installed themes
+ * @returns preferred theme or last theme
+ */
+export const getActiveTheme = (allThemes: AttornElectronTheme.Themes[]) => {
+  const settingStorage = new Storage({ name: SETTING_PATH })
+  const { activeTheme } = <AttornElectronTheme.ActiveTheme>settingStorage.read();
+  const activeTheme_fromAllThemes = allThemes.filter(item => item.name === activeTheme)[0];
+  const lastTheme = allThemes[allThemes.length - 1];
+
+  if (!activeTheme_fromAllThemes || !activeTheme_fromAllThemes.name) {
+    settingStorage.create();
+    settingStorage.update('activeTheme', lastTheme.name);
+    return lastTheme;
+  }
+
+  return activeTheme_fromAllThemes;
+}
