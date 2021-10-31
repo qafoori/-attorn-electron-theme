@@ -1,19 +1,19 @@
 {
   "name": "@attorn/electron-theme",
   "author": "qafoori",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A package for theming electron projects with the ability to create, change, install and uninstall themes",
-  "homepage": "https://github.com/attorn/-attorn-react-theme#readme",
+  "homepage": "https://github.com/attorn/-attorn-electron-theme#readme",
   "license": "MIT",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/attorn/-attorn-react-theme/issues"
+    "url": "https://github.com/attorn/-attorn-electron-theme/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/attorn/-attorn-react-theme.git"
+    "url": "git+https://github.com/attorn/-attorn-electron-theme.git"
   },
   "files": [
     "dist",
@@ -21,7 +21,6 @@
   ],
   "keywords": [
     "electron",
-    "nodejs",
     "theme",
     "electron-theme",
     "attorn"
