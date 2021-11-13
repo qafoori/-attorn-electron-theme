@@ -1,7 +1,7 @@
 {
   "name": "@attorn/electron-theme",
   "author": "qafoori",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A package for theming electron projects with the ability to create, change, install and uninstall themes",
   "homepage": "https://github.com/attorn/-attorn-electron-theme#readme",
   "license": "MIT",
