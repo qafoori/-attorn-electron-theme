@@ -29,4 +29,4 @@ export {
   changeTheme
 } from './helpers';
 
-export { AttornElectronTheme } from './interfaces';
+export type { AttornElectronTheme } from './interfaces';
